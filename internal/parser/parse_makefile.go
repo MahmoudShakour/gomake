@@ -2,8 +2,8 @@ package internal
 
 import (
 	"bufio"
-	"fmt"
-
+	"os"
+	"path/filepath"
 	"io/fs"
 	"strings"
 )
@@ -24,7 +24,6 @@ func ParseMakeFile(fileSystem fs.FS, filename string) []target {
 	targetLine, commandLine := "", ""
 	for scanner.Scan() {
 		textline := scanner.Text()
-		fmt.Println(len(textline))
 		if len(textline)==0 {
 			continue
 		} else if strings.HasPrefix(textline, "    ") {
@@ -47,4 +46,12 @@ func newTarget(targetLine string, commandLine string) target {
 	target.command = strings.TrimPrefix(commandLine,"    ")
 
 	return target
+}
+
+
+func ParsePath(filePath string) (fs.FS,string){
+	directoryName:=os.DirFS(filepath.Dir(filePath))
+	fileName:=filepath.Base(filePath)
+
+	return directoryName,fileName
 }
