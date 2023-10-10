@@ -19,7 +19,7 @@ func TestParseMakeFile(t *testing.T) {
 		}
 
 		got := ParseMakeFile(fs, filename)
-		want := target{name: "target1", dependencies: []string{"dep1", "dep2", "dep3"}, command: "this is a command"}
+		want := Target{Name: "target1", Dependencies: []string{"dep1", "dep2", "dep3"}, Command: "this is a command"}
 
 		if !reflect.DeepEqual(got[0], want) {
 			t.Errorf("got %q want %q", got, want)
@@ -41,9 +41,9 @@ run:
 		}
 
 		got := ParseMakeFile(fs, filename)
-		want := []target{
-			{name: "build", dependencies: []string{}, command: "go build -o bin/main main.go"},
-			{name: "run", dependencies: []string{}, command: "go run main.go"},
+		want := []Target{
+			{Name: "build", Dependencies: []string{}, Command: "go build -o bin/main main.go"},
+			{Name: "run", Dependencies: []string{}, Command: "go run main.go"},
 		}
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %q want %q", got, want)
@@ -60,7 +60,7 @@ run:
 		}
 
 		got := ParseMakeFile(fs, filename)
-		want := []target{}
+		want := []Target{}
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %q want %q", got, want)
 		}

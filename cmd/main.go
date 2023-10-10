@@ -20,7 +20,7 @@ func main() {
 	makeFilePath,_:=getArguments()
 	directoryName,fileName := internal.ParsePath(makeFilePath)
 	targets:=internal.ParseMakeFile(directoryName,fileName)
-
+	
 	
 	fmt.Println(targets)
 	

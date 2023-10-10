@@ -8,18 +8,18 @@ import (
 	"strings"
 )
 
-type target struct {
-	name         string
-	dependencies []string
-	command      string
+type Target struct {
+	Name         string
+	Dependencies []string
+	Command      string
 }
 
-func ParseMakeFile(fileSystem fs.FS, filename string) []target {
+func ParseMakeFile(fileSystem fs.FS, filename string) []Target {
 	file, _ := fileSystem.Open(filename)
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	targets := make([]target, 0)
+	targets := make([]Target, 0)
 
 	targetLine, commandLine := "", ""
 	for scanner.Scan() {
@@ -37,13 +37,13 @@ func ParseMakeFile(fileSystem fs.FS, filename string) []target {
 	return targets
 }
 
-func newTarget(targetLine string, commandLine string) target {
-	target := target{}
+func newTarget(targetLine string, commandLine string) Target {
+	target := Target{}
 	splittedTargetLine := strings.Split(targetLine, " ")
-	target.name = splittedTargetLine[0]
-	target.name= target.name[0:len(target.name)-1]
-	target.dependencies = splittedTargetLine[1:]
-	target.command = strings.TrimPrefix(commandLine,"    ")
+	target.Name = splittedTargetLine[0]
+	target.Name= target.Name[0:len(target.Name)-1]
+	target.Dependencies = splittedTargetLine[1:]
+	target.Command = strings.TrimPrefix(commandLine,"    ")
 
 	return target
 }
