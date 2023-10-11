@@ -1,4 +1,4 @@
-build: clean fmt
+build: clean 
     go build -o myapp main.go
 
 clean:

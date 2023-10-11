@@ -42,8 +42,8 @@ run:
 
 		got := ParseMakeFile(fs, filename)
 		want := []Target{
-			{Name: "build", Dependencies: []string{}, Command: "go build -o bin/main main.go"},
-			{Name: "run", Dependencies: []string{}, Command: "go run main.go"},
+			{Id: 0, Name: "build", Dependencies: []string{}, Command: "go build -o bin/main main.go"},
+			{Id: 1, Name: "run", Dependencies: []string{}, Command: "go run main.go"},
 		}
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %q want %q", got, want)
