@@ -27,25 +27,7 @@ func CheckInvalidDependency(targets []internal.Target) error {
 
 func CheckCyclicDependency(targets []internal.Target) error {
 	numberOfTargets := len(targets)
-	targetNametoTargetId := map[string]int{}
-	targetIdtoTarget := map[int]internal.Target{}
-
-	for _, target := range targets {
-		targetNametoTargetId[target.Name] = target.Id
-		targetIdtoTarget[target.Id] = target
-	}
-
-	adjList := map[int][]int{}
-
-	for _, target := range targets {
-		for _, dependencyName := range target.Dependencies {
-			from := target.Id
-			to := targetNametoTargetId[dependencyName]
-
-			adjList[from] = append(adjList[from], to)
-		}
-	}
-
+	adjList:=BuildAdjList(targets)
 	
 	visited := make([]int, numberOfTargets)
 
